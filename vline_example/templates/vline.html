@@ -1,0 +1,60 @@
+{% load vline_tags %}
+
+{% if user.is_authenticated %}
+
+<script src="https://static.vline.com/vline.js" type="text/javascript"></script>
+
+<script>
+var vlineClient = (function(){
+  
+  var client, session,
+    authToken = {{ user|vline_auth_token|safe }},
+    serviceId = {% vline_service_id %},
+    profile = {{ user|vline_user_profile|safe }};
+
+  // Create vLine client  
+  window.vlineClient = client = vline.Client.create({"serviceId": serviceId, "ui": true});
+  // Add login event handler
+  client.on('login', onLogin);
+  // Do login
+  client.login(serviceId, profile, authToken);
+
+  function onLogin(event) {
+    session = event.target;
+
+    // Find and init call buttons
+    var callButtons = document.getElementsByClassName('callbutton');
+    for (var i=0; i < callButtons.length; ++i) {
+      initCallButton(callButtons[i]);
+    }
+  }
+
+  // add event handlers for call button
+  function initCallButton(button, person) {
+    var userId = button.getAttribute('data-userid');
+  
+    // fetch person object associated with username
+    session.getPerson(userId).done(function(person) {
+      // update button state with presence
+      function onPresenceChange() {
+        button.setAttribute('data-presence', person.getPresenceState());
+      }
+    
+      // set current presence
+      onPresenceChange();
+    
+      // handle presence changes
+      person.on('change', onPresenceChange);
+    
+      // start a call when button is clicked
+      button.addEventListener('click', function() {
+        person.startMedia();
+      });
+    });
+  }
+  
+  return client;
+})();
+</script>
+
+{% endif %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block body %}
+
+{% if users %}
+    {% for user in users %}
+    <div class="row">
+      <div class="span4">
+        <p><button data-username="{{ user.id }}" class="btn callbutton">Call {{ user.display_name }}</button></p>
+      </div>
+    </div>
+    {% endfor %}
+{% endif %}
+
+{% endblock %}

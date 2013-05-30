@@ -1,0 +1,65 @@
+{% load i18n %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}" xml:lang="{{ LANGUAGE_CODE }}" lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>{% if site_name %}{{ site_name }} : {% endif %}{% block head_title %}{% endblock %}</title>
+  <link href="static/bootstrap.min.css" rel="stylesheet">
+  <style>
+    [data-presence="online"] {
+        background: green;
+    }
+  </style>
+  {% block extra_head %}
+  {% endblock %}
+</head>
+
+<body>
+  <div class="navbar navbar-inverse">
+    <div class="navbar-inner">
+      <div class="container">
+        <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="brand" href="#">vLine Django Example</a>
+        <div class="nav-collapse collapse">
+          <ul class="nav">
+            <li><a href="/">Home</a></li>
+            <li><a href="/admin/">Admin</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    {% if messages %}
+    <div class="row">
+      <div class="span4">
+        <ul id="messages">
+          {% for message in messages %}
+          <li id="message_{{ forloop.counter }}"><a href="#" onclick="$('#message_{{ forloop.counter }}').fadeOut(); return false;"><small>{% trans "clear" %}</small></a> {{ message }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    {% endif %}
+    
+    {% if user.is_authenticated %}
+      {% block body %}
+      {% endblock %}
+    {% else %}
+      <div class="row">
+        <div class="span4">
+          <a href="/admin/" class="btn btn-primary btn-large">Login</a>
+        </div>
+      </div>
+    {% endif %}
+
+    <footer><p>{% block footer %}{% endblock %}</p></footer>
+  </div>
+  {% include "vline.html" %}
+</body>
+</html>
