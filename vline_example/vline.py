@@ -26,6 +26,5 @@ def create_user_profile(user):
         display_name = user.get_username()
     return {
         "id": user.id,
-        "username": user.get_username(),
-        "display_name": display_name
+        "displayName": display_name
     }
