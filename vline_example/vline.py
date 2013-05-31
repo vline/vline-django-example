@@ -3,9 +3,8 @@ import time
 
 # replace with values from your service settings
 # see: https://vline.com/developer/docs/authentication
-
-API_SECRET = 'foo'
-SERVICE_ID = 'bar'
+API_SECRET = 'YOUR_SECRET'
+SERVICE_ID = 'YOUR_SERVICE_ID'
 SESSION_EXPIRATION_TIME = 48 * 60 * 60 # 2 days in seconds
 
 def create_auth_token(userId):

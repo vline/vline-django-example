@@ -4,7 +4,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <title>{% if site_name %}{{ site_name }} : {% endif %}{% block head_title %}{% endblock %}</title>
-  <link href="static/bootstrap.min.css" rel="stylesheet">
+  <link href="/static/bootstrap.min.css" rel="stylesheet">
   <style>
     [data-presence="online"] {
         background: green;
@@ -13,6 +13,7 @@
   {% block extra_head %}
   {% endblock %}
 </head>
+
 
 <body>
   <div class="navbar navbar-inverse">
@@ -51,11 +52,7 @@
       {% block body %}
       {% endblock %}
     {% else %}
-      <div class="row">
-        <div class="span4">
-          <a href="/admin/" class="btn btn-primary btn-large">Login</a>
-        </div>
-      </div>
+      {% block content %}{% endblock %}
     {% endif %}
 
     <footer><p>{% block footer %}{% endblock %}</p></footer>
