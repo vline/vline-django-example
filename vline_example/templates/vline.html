@@ -44,7 +44,7 @@ var vlineClient = (function(){
       onPresenceChange();
     
       // handle presence changes
-      person.on('change', onPresenceChange);
+      person.on('change:presenceState', onPresenceChange);
     
       // start a call when button is clicked
       button.addEventListener('click', function() {
